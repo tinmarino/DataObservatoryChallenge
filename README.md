@@ -1,5 +1,29 @@
 # Quickstart
 
+The first 2 exercices are finished and can be checked with the following lines
+
+The last exercice (Data Eng) is not finished and my advancement can be readed in the README or the las CSV file.
+
+Have a good reading!
+
+
+```bash
+# 0 Fetch code
+git clone https://github.com/tinmarino/DataObservatoryChallenge && cd DataObservatoryChallenge 
+
+# 1 Patent
+python3 1_patent/patent.py AAAA001  # Run program
+python3 1_patent/test/test_patent.py  # Run test
+
+# 2 Starwars
+python3 2_starwars/starwars.py  # Run program, getting values from files (=> no latency)
+
+# 3 Data eng
+vim README.md
+vim 3_dataeng/test/crucero_6.csv
+```
+
+
 # Comments
 
 ### 1/ Patent
@@ -28,7 +52,8 @@ from json import loads as json_loads, load as json_load
 ### 3/ DataEng
 
 ```bash
-# Just read below
+# Just read below or ..
+vim 3_dataeng/ipython_session.txt  # To see the command I typed
 ```
 
 * Ref: https://medium.com/analytics-vidhya/pandas-csv-cheatsheet-f88abecbe289
@@ -78,7 +103,7 @@ df.fillna( method ='ffill', inplace = True)
 
 This created the file test/crucero_5.csv
 
-#### 3.1.4 Standard varaible
+#### 3.1.4 Standard variable
 
 ```bash
 cp crucero_5.csv crucero_6.csv
@@ -90,7 +115,6 @@ vim crucero_6.csv
 3. Replace non alpha num by hyphen: `:s/[^a-z0-9,]/-/g`
 
 This created the file test/crucero_6.csv
-
 
 
 # Tips

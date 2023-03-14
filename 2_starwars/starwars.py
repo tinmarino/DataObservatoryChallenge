@@ -29,7 +29,7 @@ def starwars():
     print()
 
     # Read person
-    # TODO uncomment, just for test
+    # Commentted just for test
     # pylint: disable=using-constant-test
     if False:
         with urlopen('https://swapi.dev/api/people/') as url:
@@ -54,7 +54,6 @@ def starwars():
     print()
 
     # Read planet
-    # TODO uncomment, just for test
     # pylint: disable=using-constant-test
     if False:
         with urlopen('https://swapi.dev/api/planet/') as url:
@@ -228,6 +227,7 @@ class Person():
                 ['1/ BMI', f'{self.get_bmi():.3f}'],
                 ['2/ Human', "Yes" if self.is_human() else "No"],
                 ['3/ Machines', self.get_machine_quantity()],
+                # pylint: disable=consider-using-f-string
                 ['4/ Birth', "%0.1f" % birth + '  # ' + birth_cmp],
                 ['5/ Homeworld', self.get_homeworld()],
                 ]:

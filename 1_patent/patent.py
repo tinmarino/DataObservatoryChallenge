@@ -72,9 +72,9 @@ def parse_args():
 
 class VehicleId():
     """ Contains vehicle information and methods """
-    def __init__(self, patent):
-        self.patent = patent  # string
-        self.id = 0  # integer
+    def __init__(self, this_patent):
+        self.patent = this_patent  # string
+        self.idd = 0  # integer
 
         self.head = None  # string
         self.tail = None  # integer
@@ -93,12 +93,13 @@ class VehicleId():
 
         # Check that string is 7 characters long
         if 7 != len(self.patent):
-            raise IllegalArgumentError("Input string must be 7 characetrs long")
+            raise IllegalArgumentError("Input string must be 7 characters long")
 
         # Get and check head
         head = self.patent[0:4].lower()
         if not match(r'[a-z]{4}', head):
-            raise IllegalArgumentError("Input string must start with 4 alpha characters (like ABCD)")
+            raise IllegalArgumentError("Input string must start with 4 alpha characters"
+                "(like ABCD)")
         self.head = head
 
         # Get and check tail
@@ -114,8 +115,8 @@ class VehicleId():
         res = 1
 
         # Clause: do not work twice
-        if 0 != self.id:
-            return self.id
+        if 0 != self.idd:
+            return self.idd
 
         # Divide string in 2 parts
         head, tail = self.get_head_n_tail()
