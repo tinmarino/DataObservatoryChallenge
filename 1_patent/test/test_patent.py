@@ -6,7 +6,9 @@ Run me from the same directory as patent.py
 """
 from unittest import TestCase, main as test_main  # For formated test
 from subprocess import Popen, PIPE  # For shell_execute
+from os.path import dirname, abspath
 
+root_dir = dirname(dirname(abspath(__file__)))
 
 class TestPatent(TestCase):
     """ Main Unitest class """
@@ -24,7 +26,7 @@ class TestPatent(TestCase):
 
     def assert_patent_id(self, patent, idd):
         """ From subshell """
-        ret = shell_execute(f'./patent.py {patent}')
+        ret = shell_execute(f'{root_dir}/patent.py {patent}')
         self.assertEqual(str(idd), ret[1])
 
 

@@ -28,6 +28,48 @@ TODO
 from argparse import ArgumentParser  # Get input
 from re import match  # Check input
 
+
+def patent():
+    """ Main """
+    res = 0
+
+    # Parse
+    args = parse_args()
+
+    # Instanciate
+    vehicle_id = VehicleId(args.patent)
+
+    # Check in
+    vehicle_id.check_patent()
+
+    # Work
+    res = vehicle_id.get_id()
+
+    # Stdout
+    print(res)
+
+    # Python return
+    return res
+
+
+def parse_args():
+    """ Parse, check and sanitize command line argument
+    Return: namespace object with patent
+    """
+    parser = ArgumentParser(
+        prog='patent.py',
+        description='Get ID from the given vehicle patent string',
+        )
+
+    parser.add_argument(
+        'patent',
+        type=str,
+        help='Vehicle patent string'
+        )
+
+    return parser.parse_args()
+
+
 class VehicleId():
     """ Contains vehicle information and methods """
     def __init__(self, patent):
@@ -97,39 +139,6 @@ class VehicleId():
 
 class IllegalArgumentError(ValueError):
     """ Just a better name for ValueError """
-
-
-def patent():
-    """ Main """
-    res = 0
-
-    args = parse_args()
-
-    vehicle_id = VehicleId(args.patent)
-    vehicle_id.check_patent()
-    res = vehicle_id.get_id()
-
-    # Stdout
-    print(res)
-
-    return res
-
-def parse_args():
-    """ Parse, check and sanitize command line argument
-    Return: namespace object with patent
-    """
-    parser = ArgumentParser(
-        prog='patent.py',
-        description='Get ID from the given vehicle patent string',
-        )
-
-    parser.add_argument(
-        'patent',
-        type=str,
-        help='Vehicle patent string'
-        )
-
-    return parser.parse_args()
 
 
 if __name__ == "__main__":
