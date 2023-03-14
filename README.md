@@ -25,6 +25,16 @@ from urllib.request import urlopen
 from json import loads as json_loads, load as json_load
 ```
 
+### 3/ DataEng
+
+```bash
+python3 3_dataeng/dataeng.py
+```
+
+#### 3.1.1 Remove empty columns
+
+
+
 # Tips
 
 ```python
