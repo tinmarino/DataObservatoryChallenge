@@ -1,0 +1,470 @@
+$ ipython3
+Python 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.31.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: import pandas as pd
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+<ipython-input-1-7dd3504c366f> in <module>
+----> 1 import pandas as pd
+
+ModuleNotFoundError: No module named 'pandas'
+
+In [2]: df = pd.read_csv('test/crucero_1.csv')
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-2-b83be0cc1147> in <module>
+----> 1 df = pd.read_csv('test/crucero_1.csv')
+
+NameError: name 'pd' is not defined
+
+In [3]: import pandas as pd
+
+In [4]: df = pd.read_csv('test/crucero_1.csv')
+
+In [5]: df
+Out[5]:
+         Unnamed: 0 Unnamed: 1  ... Unnamed: 13 Unnamed: 14
+0            Cruise    Station  ...     Column1          _1
+1      Crucero 2016         37  ...         NaN         NaN
+2               NaN        NaN  ...         NaN         NaN
+3               NaN        NaN  ...         NaN         NaN
+4               NaN        NaN  ...         NaN         NaN
+...             ...        ...  ...         ...         ...
+25099           NaN        NaN  ...         NaN         NaN
+25100           NaN        NaN  ...         NaN         NaN
+25101           NaN        NaN  ...         NaN         NaN
+25102           NaN        NaN  ...         NaN         NaN
+25103           NaN        NaN  ...         NaN         NaN
+
+[25104 rows x 15 columns]
+
+In [6]: empty_cols = [col for col in df.columns if df[col].isnull().all()]
+   ...:
+
+In [7]: empty_cols
+Out[7]: []
+
+In [8]: df.columns
+Out[8]:
+Index(['Unnamed: 0', 'Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4',
+       'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8', 'Unnamed: 9',
+       'Unnamed: 10', 'Unnamed: 11', 'Unnamed: 12', 'Unnamed: 13',
+       'Unnamed: 14'],
+      dtype='object')
+
+In [9]: df = pd.read_csv('test/crucero_2.csv')
+
+In [10]: empty_cols = [col for col in df.columns if df[col].isnull().all()]
+
+In [11]: empty_cols
+Out[11]: ['Column1', '_1']
+
+In [12]: df.columns
+Out[12]:
+Index(['Cruise', 'Station', 'Type', 'yyyy-mm-ddThh:mm:ss.sss',
+       'Longitude [degrees_east]', 'Latitude [degrees_north]',
+       'Bot. Depth [m]', 'Ship', 'Depth [m]',
+       'Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]', 'Dissolved oxygen [ml/l]',
+       'Temperature [deg C]', 'Salinity, Practical [PSU]', 'Column1', '_1'],
+      dtype='object')
+
+In [13]: df.drop(empty_cols,
+    ...:         axis=1,
+    ...:         inplace=True)
+
+In [14]:
+
+In [14]: df
+Out[14]:
+             Cruise  Station  ... Temperature [deg C] Salinity, Practical [PSU]
+0      Crucero 2016     37.0  ...              7.3546                   30.7609
+1               NaN      NaN  ...              7.2775                   30.6860
+2               NaN      NaN  ...              7.2760                   30.6708
+3               NaN      NaN  ...              7.2617                   30.6780
+4               NaN      NaN  ...              7.2311                   30.6943
+...             ...      ...  ...                 ...                       ...
+25098           NaN      NaN  ...              7.7706                   33.2114
+25099           NaN      NaN  ...              7.7694                   33.2115
+25100           NaN      NaN  ...              7.7698                   33.2114
+25101           NaN      NaN  ...              7.7673                   33.2123
+25102           NaN      NaN  ...              7.7637                   33.2131
+
+[25103 rows x 13 columns]
+
+In [15]: df.columns
+Out[15]:
+Index(['Cruise', 'Station', 'Type', 'yyyy-mm-ddThh:mm:ss.sss',
+       'Longitude [degrees_east]', 'Latitude [degrees_north]',
+       'Bot. Depth [m]', 'Ship', 'Depth [m]',
+       'Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]', 'Dissolved oxygen [ml/l]',
+       'Temperature [deg C]', 'Salinity, Practical [PSU]'],
+      dtype='object')
+
+In [16]: df.to_csv('test/crucero_3.csv')
+
+In [17]: for col in df.columns: print(col, col.dtype)
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-17-6ab12be27f01> in <module>
+----> 1 for col in df.columns: print(col, col.dtype)
+
+AttributeError: 'str' object has no attribute 'dtype'
+
+In [18]: df.columns.dtype
+Out[18]: dtype('O')
+
+In [19]: df.dtype
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-19-b959c06452a1> in <module>
+----> 1 df.dtype
+
+~/.local/lib/python3.10/site-packages/pandas/core/generic.py in __getattr__(self, name)
+   5900         ):
+   5901             return self[name]
+-> 5902         return object.__getattribute__(self, name)
+   5903
+   5904     def __setattr__(self, name: str, value) -> None:
+
+AttributeError: 'DataFrame' object has no attribute 'dtype'
+
+In [20]: df.dtypes
+Out[20]:
+Cruise                                         object
+Station                                       float64
+Type                                           object
+yyyy-mm-ddThh:mm:ss.sss                        object
+Longitude [degrees_east]                      float64
+Latitude [degrees_north]                      float64
+Bot. Depth [m]                                float64
+Ship                                           object
+Depth [m]                                     float64
+Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]    float64
+Dissolved oxygen [ml/l]                       float64
+Temperature [deg C]                           float64
+Salinity, Practical [PSU]                     float64
+dtype: object
+
+In [21]:
+
+In [21]:
+
+In [21]: df
+Out[21]:
+             Cruise  Station Type yyyy-mm-ddThh:mm:ss.sss  ...  Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]  Dissolved oxygen [ml/l]  Temperature [deg C] Salinity, Practical [PSU]
+0      Crucero 2016     37.0    C        10/25/2016 12:10  ...                                         0.0                  6.88523               7.3546                   30.7609
+1               NaN      NaN  NaN                     NaN  ...                                         0.0                  6.90105               7.2775                   30.6860
+2               NaN      NaN  NaN                     NaN  ...                                         0.0                  6.90176               7.2760                   30.6708
+3               NaN      NaN  NaN                     NaN  ...                                         0.0                  6.90315               7.2617                   30.6780
+4               NaN      NaN  NaN                     NaN  ...                                         0.0                  6.90701               7.2311                   30.6943
+...             ...      ...  ...                     ...  ...                                         ...                      ...                  ...                       ...
+25098           NaN      NaN  NaN                     NaN  ...                                         0.0                  6.71186               7.7706                   33.2114
+25099           NaN      NaN  NaN                     NaN  ...                                         0.0                  6.71206               7.7694                   33.2115
+25100           NaN      NaN  NaN                     NaN  ...                                         0.0                  6.71197               7.7698                   33.2114
+25101           NaN      NaN  NaN                     NaN  ...                                         0.0                  6.71229               7.7673                   33.2123
+25102           NaN      NaN  NaN                     NaN  ...                                         0.0                  6.71302               7.7637                   33.2131
+
+[25103 rows x 13 columns]
+
+In [22]: df['yyyy-mm-ddThh:mm:ss.sss']= pd.to_datetime(df['yyyy-mm-ddThh:mm:ss.sss'])
+
+In [23]: df.dtypes
+Out[23]:
+Cruise                                                object
+Station                                              float64
+Type                                                  object
+yyyy-mm-ddThh:mm:ss.sss                       datetime64[ns]
+Longitude [degrees_east]                             float64
+Latitude [degrees_north]                             float64
+Bot. Depth [m]                                       float64
+Ship                                                  object
+Depth [m]                                            float64
+Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]           float64
+Dissolved oxygen [ml/l]                              float64
+Temperature [deg C]                                  float64
+Salinity, Practical [PSU]                            float64
+dtype: object
+
+In [24]:
+
+In [24]: df.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 25103 entries, 0 to 25102
+Data columns (total 13 columns):
+ #   Column                                      Non-Null Count  Dtype
+---  ------                                      --------------  -----
+ 0   Cruise                                      58 non-null     object
+ 1   Station                                     58 non-null     float64
+ 2   Type                                        58 non-null     object
+ 3   yyyy-mm-ddThh:mm:ss.sss                     58 non-null     datetime64[ns]
+ 4   Longitude [degrees_east]                    58 non-null     float64
+ 5   Latitude [degrees_north]                    58 non-null     float64
+ 6   Bot. Depth [m]                              58 non-null     float64
+ 7   Ship                                        63 non-null     object
+ 8   Depth [m]                                   25100 non-null  float64
+ 9   Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]  25100 non-null  float64
+ 10  Dissolved oxygen [ml/l]                     25100 non-null  float64
+ 11  Temperature [deg C]                         25100 non-null  float64
+ 12  Salinity, Practical [PSU]                   25100 non-null  float64
+dtypes: datetime64[ns](1), float64(9), object(3)
+memory usage: 2.5+ MB
+
+In [25]: df.to_csv('test/crucero_4.csv')
+
+In [26]: df["Longitude"].is_null()
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3801             try:
+-> 3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+KeyError: 'Longitude'
+
+The above exception was the direct cause of the following exception:
+
+KeyError                                  Traceback (most recent call last)
+<ipython-input-26-8023c45982f2> in <module>
+----> 1 df["Longitude"].is_null()
+
+~/.local/lib/python3.10/site-packages/pandas/core/frame.py in __getitem__(self, key)
+   3805             if self.columns.nlevels > 1:
+   3806                 return self._getitem_multilevel(key)
+-> 3807             indexer = self.columns.get_loc(key)
+   3808             if is_integer(indexer):
+   3809                 indexer = [indexer]
+
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+-> 3804                 raise KeyError(key) from err
+   3805             except TypeError:
+   3806                 # If we have a listlike key, _check_indexing_error will raise
+
+KeyError: 'Longitude'
+
+In [27]: df.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 25103 entries, 0 to 25102
+Data columns (total 13 columns):
+ #   Column                                      Non-Null Count  Dtype
+---  ------                                      --------------  -----
+ 0   Cruise                                      58 non-null     object
+ 1   Station                                     58 non-null     float64
+ 2   Type                                        58 non-null     object
+ 3   yyyy-mm-ddThh:mm:ss.sss                     58 non-null     datetime64[ns]
+ 4   Longitude [degrees_east]                    58 non-null     float64
+ 5   Latitude [degrees_north]                    58 non-null     float64
+ 6   Bot. Depth [m]                              58 non-null     float64
+ 7   Ship                                        63 non-null     object
+ 8   Depth [m]                                   25100 non-null  float64
+ 9   Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]  25100 non-null  float64
+ 10  Dissolved oxygen [ml/l]                     25100 non-null  float64
+ 11  Temperature [deg C]                         25100 non-null  float64
+ 12  Salinity, Practical [PSU]                   25100 non-null  float64
+dtypes: datetime64[ns](1), float64(9), object(3)
+memory usage: 2.5+ MB
+
+In [28]: df["Longitude [degrees_east]"].is_null()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-28-32c1dc7c2cf3> in <module>
+----> 1 df["Longitude [degrees_east]"].is_null()
+
+~/.local/lib/python3.10/site-packages/pandas/core/generic.py in __getattr__(self, name)
+   5900         ):
+   5901             return self[name]
+-> 5902         return object.__getattribute__(self, name)
+   5903
+   5904     def __setattr__(self, name: str, value) -> None:
+
+AttributeError: 'Series' object has no attribute 'is_null'
+
+In [29]: df[0]
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3801             try:
+-> 3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+KeyError                                  Traceback (most recent call last)
+<ipython-input-29-ad11118bc8f3> in <module>
+----> 1 df[0]
+
+~/.local/lib/python3.10/site-packages/pandas/core/frame.py in __getitem__(self, key)
+   3805             if self.columns.nlevels > 1:
+   3806                 return self._getitem_multilevel(key)
+-> 3807             indexer = self.columns.get_loc(key)
+   3808             if is_integer(indexer):
+   3809                 indexer = [indexer]
+
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+-> 3804                 raise KeyError(key) from err
+   3805             except TypeError:
+   3806                 # If we have a listlike key, _check_indexing_error will raise
+
+KeyError: 0
+
+In [30]:
+
+In [30]: df = pd.read_csv('test/crucero_4.csv')
+
+In [31]: df[0]
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3801             try:
+-> 3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+KeyError                                  Traceback (most recent call last)
+<ipython-input-31-ad11118bc8f3> in <module>
+----> 1 df[0]
+
+~/.local/lib/python3.10/site-packages/pandas/core/frame.py in __getitem__(self, key)
+   3805             if self.columns.nlevels > 1:
+   3806                 return self._getitem_multilevel(key)
+-> 3807             indexer = self.columns.get_loc(key)
+   3808             if is_integer(indexer):
+   3809                 indexer = [indexer]
+
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+-> 3804                 raise KeyError(key) from err
+   3805             except TypeError:
+   3806                 # If we have a listlike key, _check_indexing_error will raise
+
+KeyError: 0
+
+In [32]: df[0] == ""
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3801             try:
+-> 3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+KeyError                                  Traceback (most recent call last)
+<ipython-input-32-ce7cfda763e6> in <module>
+----> 1 df[0] == ""
+
+~/.local/lib/python3.10/site-packages/pandas/core/frame.py in __getitem__(self, key)
+   3805             if self.columns.nlevels > 1:
+   3806                 return self._getitem_multilevel(key)
+-> 3807             indexer = self.columns.get_loc(key)
+   3808             if is_integer(indexer):
+   3809                 indexer = [indexer]
+
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+-> 3804                 raise KeyError(key) from err
+   3805             except TypeError:
+   3806                 # If we have a listlike key, _check_indexing_error will raise
+
+KeyError: 0
+
+In [33]: import np
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+<ipython-input-33-8dad32cc71f7> in <module>
+----> 1 import np
+
+ModuleNotFoundError: No module named 'np'
+
+In [34]: import numpy as np
+
+In [35]: df[df[0]==""] = np.NaN
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3801             try:
+-> 3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+~/.local/lib/python3.10/site-packages/pandas/_libs/index.pyx in pandas._libs.index.IndexEngine.get_loc()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+pandas/_libs/hashtable_class_helper.pxi in pandas._libs.hashtable.PyObjectHashTable.get_item()
+
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+KeyError                                  Traceback (most recent call last)
+<ipython-input-35-cdb25be45d4a> in <module>
+----> 1 df[df[0]==""] = np.NaN
+
+~/.local/lib/python3.10/site-packages/pandas/core/frame.py in __getitem__(self, key)
+   3805             if self.columns.nlevels > 1:
+   3806                 return self._getitem_multilevel(key)
+-> 3807             indexer = self.columns.get_loc(key)
+   3808             if is_integer(indexer):
+   3809                 indexer = [indexer]
+
+~/.local/lib/python3.10/site-packages/pandas/core/indexes/base.py in get_loc(self, key, method, tolerance)
+   3802                 return self._engine.get_loc(casted_key)
+   3803             except KeyError as err:
+-> 3804                 raise KeyError(key) from err
+   3805             except TypeError:
+   3806                 # If we have a listlike key, _check_indexing_error will raise
+
+KeyError: 0
+
+In [36]: df.fillna( method ='ffill', inplace = True)
+
+In [37]: df.to_csv('test/crucero_5.csv')
+

@@ -3,11 +3,24 @@
 
 """
 Parse, treat and format data
+
+
+Finally using pandas in ipython
+
+# Tarea1 empty columns
+# From: https://www.jitsejan.com/find-and-delete-empty-columns
+empty_cols = [col for col in df.columns if df[col].isnull().all()]
+# Drop these columns from the dataframe
+df.drop(empty_cols,
+        axis=1,
+        inplace=True)
+
+
 """
 
 from os.path import dirname, abspath  # Get root dir
-#from csv import reader  # read file
-from numpy import genfromtxt  # read file
+from csv import reader  # read file
+#from numpy import genfromtxt  # read file
 
 root_dir = dirname(abspath(__file__))
 csv_file = root_dir + '/test/crucero_1.csv'
@@ -32,12 +45,12 @@ def task1_clean(csv):
 
 def get_csv():
     """ Get cvs as line col """
-    #with open(csv_file, encoding="utf-8") as fil:
-    #    my_reader = reader(fil, delimiter=",", quotechar='"')
-    #    # Skip the headers
-    #    #next(my_reader, None)
-    #    data_read = [row for row in my_reader]
-    data_read = genfromtxt(csv_file, delimiter=',')
+    with open(csv_file, encoding="utf-8") as fil:
+        my_reader = reader(fil, delimiter=",", quotechar='"')
+        # Skip the headers
+        #next(my_reader, None)
+        data_read = [row for row in my_reader]
+    #data_read = genfromtxt(csv_file, delimiter=',')
 
     return data_read
 
