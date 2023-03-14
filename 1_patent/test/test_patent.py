@@ -6,7 +6,7 @@ Run me from the same directory as patent.py
 """
 from unittest import TestCase, main as test_main  # For formated test
 from subprocess import Popen, PIPE  # For shell_execute
-from os.path import dirname, abspath
+from os.path import dirname, abspath  # Get root dir
 
 root_dir = dirname(dirname(abspath(__file__)))
 
